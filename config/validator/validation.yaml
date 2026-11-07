@@ -1,0 +1,60 @@
+App\Entity\Location:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [city, country]
+            groups: [create]
+    properties:
+        city:
+            - NotBlank:
+                groups: [create, edit]
+            - Length:
+                min: 2
+                max: 255
+                groups: [create]
+        country:
+            - NotBlank:
+                groups: [create, edit]
+        latitude:
+            - NotBlank:
+                groups: [create, edit]
+            - Range:
+                min: -90
+                max: 90
+                groups: [create, edit]
+        longitude:
+            - NotBlank:
+                groups: [create, edit]
+            - Range:
+                min: -180
+                max: 180
+                groups: [create, edit]
+
+App\Entity\Measurement:
+    properties:
+        location:
+            - NotNull:
+                groups: [create, edit]
+        date:
+            - NotNull:
+                groups: [create, edit]
+            - GreaterThanOrEqual:
+                value: today
+                groups: [create]
+        celsius:
+            - NotBlank:
+                groups: [create, edit]
+            - Range:
+                min: -90
+                max: 60
+                groups: [create, edit]
+        windSpeed:
+            - PositiveOrZero:
+                groups: [create, edit]
+        pressure:
+            - Positive:
+                groups: [create, edit]
+        humidity:
+            - Range:
+                min: 0
+                max: 100
+                groups: [create, edit]
